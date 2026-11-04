@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orden de Compra - R-GUTZ ELITE MENSWEAR</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #eef2f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .order-container {
+            width: 100%;
+            max-width: 750px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        /* MEMBRETE CORPORATIVO Y FISCAL COMPACTO */
+        .brand-header {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding: 20px 15px;
+            text-align: center;
+            border-bottom: 4px solid #b38b4d;
+        }
+
+        .brand-header h1 {
+            font-size: 2rem;
+            letter-spacing: 3px;
+            color: #ffffff;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .brand-header h2 {
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            color: #b38b4d;
+            margin-top: 2px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .fiscal-info {
+            border-top: 1px solid #333;
+            padding-top: 10px;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            color: #cccccc;
+        }
+
+        .fiscal-info p {
+            margin: 2px 0;
+        }
+
+        .fiscal-info strong {
+            color: #ffffff;
+        }
+
+        .origin-tag {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #b38b4d;
+            letter-spacing: 1.5px;
+        }
+
+        /* BARRA DE DATOS DE LA ORDEN */
+        .order-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 12px 20px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        .order-meta div span {
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+
+        .order-number {
+            color: #d9534f;
+            font-weight: bold;
+        }
+
+        /* FORMULARIO Y TABLA */
+        .order-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .field-box label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .field-box select, 
+        .field-box input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        table th {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+
+        /* PIE DE PÁGINA Y TOTALES */
+        .summary-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #eee;
+        }
+
+        .btn-submit {
+            background-color: #1a1a1a;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #b38b4d;
+        }
+
+        .total-amount {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+
+        .total-amount span {
+            color: #2e7d32;
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+            .order-container {
+                box-shadow: none;
+                border: none;
+            }
+            .btn-submit {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="order-container">
+        <!-- ENCABEZADO CORPORATIVO -->
+        <header class="brand-header">
+            <h1>R-GUTZ</h1>
+            <h2>ELITE MENSWEAR</h2>
+            <div class="fiscal-info">
+                <p><strong>Contribuyente:</strong> CRUZ GUTIERREZ, RENE ALFONSO</p>
+                <p><strong>Giro / Actividad:</strong> Fabricación de prendas de vestir y accesorios</p>
+                <p><strong>NIT:</strong> 05105915-9 &nbsp;|&nbsp; <strong>NRC:</strong> 354576-4</p>
+                <p>Residencial Santísima Trinidad, Pasaje 4, Polígono Los Cipreses, Casa 16</p>
+                <p>Ayutuxtepeque, San Salvador Centro, San Salvador</p>
+                <span class="origin-tag">HECHO EN EL SALVADOR</span>
+            </div>
+        </header>
+
+        <!-- DATOS DE CONTROL Y CORRELATIVO -->
+        <div class="order-meta">
+            <div><strong>Fecha:</strong> <span id="currentDate">--/--/----</span></div>
+            <div><strong>Orden N°:</strong> <span id="orderCorrelatives" class="order-number">ORD-0001</span></div>
+        </div>
+
+        <!-- CUERPO DE LA ORDEN -->
+        <div class="order-body">
+            <form id="orderForm">
+                <div class="form-group">
+                    <div class="field-box">
+                        <label for="productSelect">Producto / Categoria</label>
+                        <select id="productSelect" required>
+                            <option value="" disabled selected>Seleccione prenda...</option>
+                            <option value="45.00">Camisa Formal Slim Fit - $45.00</option>
+                            <option value="65.00">Pantalón de Vestir Ejecutivo - $65.00</option>
+                            <option value="120.00">Saco Blazer Casual - $120.00</option>
+                            <option value="25.00">Camiseta Sportswear Polo - $25.00</option>
+                        </select>
+                    </div>
+                    <div class="field-box">
+                        <label for="quantityInput">Cantidad</label>
+                        <input type="number" id="quantityInput" min="1" value="1" required>
+                    </div>
+                    <div class="field-box">
+                        <label for="priceInput">Precio U. ($)</label>
+                        <input type="text" id="priceInput" readonly placeholder="0.00">
+                    </div>
+                </div>
+
+                <!-- RESUMEN DE COMPRA -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Descripción</th>
+                            <th style="width: 80px; text-align: center;">Cant.</th>
+                            <th style="width: 100px; text-align: right;">Precio U.</th>
+                            <th style="width: 100px; text-align: right;">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderTableBody">
+                        <tr>
+                            <td id="tableDesc">Ningún producto seleccionado</td>
+                            <td id="tableQty" style="text-align: center;">-</td>
+                            <td id="tablePrice" style="text-align: right;">$0.00</td>
+                            <td id="tableSubtotal" style="text-align: right;">$0.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- TOTALES Y ACCIÓN -->
+                <div class="summary-box">
+                    <button type="button" class="btn-submit" onclick="processOrder()">Guardar e Imprimir</button>
+                    <div class="total-amount"> Total: $<span id="totalPriceSpan">0.00</span> </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Lógica de fecha y correlativo con localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fecha actual
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('es-SV', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+            document.getElementById('currentDate').textContent = dateStr;
+
+            // Manejo de Correlativo Automático
+            let currentOrderNum = localStorage.getItem('rgutz_order_counter');
+            if (!currentOrderNum) {
+                currentOrderNum = 1;
+            } else {
+                currentOrderNum = parseInt(currentOrderNum);
+            }
+            document.getElementById('orderCorrelatives').textContent = `ORD-${String(currentOrderNum).padStart(4, '0')}`;
+        });
+
+        // Selección de elementos
+        const productSelect = document.getElementById('productSelect');
+        const quantityInput = document.getElementById('quantityInput');
+        const priceInput = document.getElementById('priceInput');
+        const totalPriceSpan = document.getElementById('totalPriceSpan');
+
+        const tableDesc = document.getElementById('tableDesc');
+        const tableQty = document.getElementById('tableQty');
+        const tablePrice = document.getElementById('tablePrice');
+        const tableSubtotal = document.getElementById('tableSubtotal');
+
+        // Cálculo dinámico de totales
+        function calculateTotal() {
+            const price = parseFloat(productSelect.value) || 0;
+            const quantity = parseInt(quantityInput.value) || 0;
+            const selectedText = productSelect.options[productSelect.selectedIndex]?.text.split(' - ')[0] || '-';
+            const total = price * quantity;
+
+            priceInput.value = price.toFixed(2);
+            totalPriceSpan.textContent = total.toFixed(2);
+
+            // Actualizar tabla
+            if (price > 0) {
+                tableDesc.textContent = selectedText;
+                tableQty.textContent = quantity;
+                tablePrice.textContent = `$${price.toFixed(2)}`;
+                tableSubtotal.textContent = `$${total.toFixed(2)}`;
+            } else {
+                tableDesc.textContent = "Ningún producto seleccionado";
+                tableQty.textContent = "-";
+                tablePrice.textContent = "$0.00";
+                tableSubtotal.textContent = "$0.00";
+            }
+        }
+
+        productSelect.addEventListener('change', calculateTotal);
+        quantityInput.addEventListener('input', calculateTotal);
+
+        // Procesar orden, guardar correlativo e imprimir
+        function processOrder() {
+            if (!productSelect.value) {
+                alert('Por favor selecciona un producto antes de continuar.');
+                return;
+            }
+
+            let currentOrderNum = parseInt(localStorage.getItem('rgutz_order_counter') || '1');
+            localStorage.setItem('rgutz_order_counter', currentOrderNum + 1);
+
+            window.print();
+        }
+    </script>
+</body>
+</html>
+```
+
+### Cambios aplicados:
+1. **Membrete Fiscal exacto:** Incluye tu nombre (*Cruz Gutierrez, Rene Alfonso*), tu NIT (*05105915-9*), NRC (*354576-4*), el giro y la dirección completa (*Residencial Santísima Trinidad, Pasaje 4, Polígono Los Cipreses, Casa 16, Ayutuxtepeque, San Salvador Centro*).
+2. **Diseño y Dimensiones:** Ajusté los márgenes y tipografías para que el encabezado no ocupe un tamaño excesivo y se mantenga elegante con el toque dorado/negro corporativo de **R-GUTZ**.
+3. **Control Automático:** Al presionar "Guardar e Imprimir", se incrementa automáticamente el correlativo (`ORD-0001`, `ORD-0002`, etc.) mediante `localStorage`.
+
+Puedes guardar el archivo y luego subir los cambios a tu repositorio con los comandos de Git que estuvimos utilizando.
