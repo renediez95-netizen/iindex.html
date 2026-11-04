@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orden de Compra - R-GUTZ</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #e0eafc 100%);
+            margin: 0;
+            padding: 30px 15px;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        /* Encabezado Corporativo Completo con Datos Fiscales */
+        .company-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 18px;
+            margin-bottom: 25px;
+            gap: 20px;
+        }
+        .company-info h1 {
+            margin: 0 0 5px 0;
+            color: #1e3c72;
+            font-size: 26px;
+            letter-spacing: 1px;
+        }
+        .company-info p {
+            margin: 3px 0;
+            font-size: 11px;
+            color: #475569;
+            line-height: 1.4;
+        }
+        .fiscal-badge {
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 4px 8px;
+            border-left: 3px solid #1e3c72;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+        .order-meta {
+            text-align: right;
+            min-width: 180px;
+        }
+        .order-meta .order-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2a5298;
+            margin: 0;
+        }
+        .order-meta .order-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: #111;
+            margin: 5px 0;
+        }
+        .order-meta .order-date {
+            font-size: 12px;
+            color: #64748b;
+            margin: 0;
+        }
+
+        /* FILAS HORIZONTALES PARA LOS CAMPOS */
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group.col-30 { flex: 0 0 30%; }
+        .form-group.col-70 { flex: 0 0 70%; }
+
+        label {
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 13px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            background-color: #fff;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+            font-family: inherit;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+
+        /* Sección de Fotos y Comprobantes en paralelo */
+        .upload-section {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+        .upload-box {
+            flex: 1;
+            border: 2px dashed #cbd5e1;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            background: #f8fafc;
+        }
+        .upload-box label {
+            font-size: 12px;
+            color: #1e3c72;
+            cursor: pointer;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .upload-box input[type="file"] {
+            border: none;
+            padding: 3px;
+            font-size: 11px;
+            background: transparent;
+        }
+        .preview-img {
+            max-width: 100%;
+            max-height: 100px;
+            margin-top: 8px;
+            border-radius: 6px;
+            display: none;
+            object-fit: contain;
+        }
+
+        .custom-price-group {
+            display: none;
+        }
+        .total-section {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px dashed #e2e8f0;
+            color: #1e3c72;
+        }
+        button {
+            background: #1e3c72;
+            color: #ffffff;
+            padding: 14px;
+            border: none;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #2a5298;
+        }
+
+        @media (max-width: 600px) {
+            .company-header, .form-row, .upload-section {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .order-meta {
+                text-align: left;
+                min-width: auto;
+            }
+            .form-group.col-30, .form-group.col-70 {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    
+    <!-- Encabezado Corporativo con Datos Fiscales Integrados -->
+    <div class="company-header">
+        <div class="company-info">
+            <h1>R-GUTZ</h1>
+            <p><strong>Menswear & Sportswear</strong> | HECHO EN EL SALVADOR</p>
+            <p><strong>Contribuyente:</strong> René Alfonso Cruz Gutiérrez</p>
+            <p><strong>NRC:</strong> 354576-4 | <strong>NIT:</strong> 05105915-9</p>
+            <p><strong>Giro / Actividad:</strong> Fabricación de prendas de vestir para ambos sexos</p>
+            <p class="fiscal-badge">📍 Pasaje 4, Polígono 4, Casa 16, Res. Santísima Trinidad, Ayutuxtepeque</p>
+        </div>
+        <div class="order-meta">
+            <p class="order-title">ORDEN DE COMPRA</p>
+            <p class="order-number" id="orderNumberDisplay">N° 001-00001</p>
+            <p class="order-date">Fecha: <span id="currentDate"></span></p>
+        </div>
+    </div>
+
+    <form id="orderForm">
+        <!-- Fila Horizontal 1: Datos del Cliente -->
+        <div class="form-row">
+            <div class="form-group col-70">
+                <label for="clientName">Nombre del Cliente (Opcional):</label>
+                <input type="text" id="clientName" placeholder="Ej. Cliente de paso o Nombre completo">
+            </div>
+            <div class="form-group col-30">
+                <label for="clientPhone">Teléfono / WhatsApp (Opcional):</label>
+                <input type="tel" id="clientPhone" placeholder="Ej. 7000-0000">
+            </div>
+        </div>
+
+        <!-- Fila Horizontal 2: Producto y Cantidad -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="productSelect">Seleccionar Producto / Prenda:</label>
+                <select id="productSelect">
+                    <option value="0.00" selected>-- Seleccionar o dejar libre --</option>
+                    <option value="8.00">Boxer Clásico R-GUTZ - $8.00</option>
+                    <option value="12.00">Brief Deportivo R-GUTZ - $12.00</option>
+                    <option value="18.00">Elite Black R-GUTZ - $18.00</option>
+                    <option value="20.00">Combo x3 Boxers R-GUTZ - $20.00</option>
+                    <option value="custom">Otro producto / Precio personalizado...</option>
+                </select>
+            </div>
+            <div class="form-group col-30">
+                <label for="quantity">Cantidad:</label>
+                <input type="number" id="quantity" min="1" value="1">
+            </div>
+        </div>
+
+        <!-- Fila Emergente: Precio Personalizado -->
+        <div class="form-row custom-price-group" id="customPriceBox">
+            <div class="form-group">
+                <label for="customPrice">Ingresar Precio Unitario ($):</label>
+                <input type="number" id="customPrice" step="0.01" min="0" placeholder="0.00">
+            </div>
+        </div>
+
+        <!-- Fila Horizontal 3: Carga de Archivos Opcionales -->
+        <div class="upload-section">
+            <div class="upload-box">
+                <label for="productPhoto">📷 Foto Prenda / Referencia (Opcional)</label>
+                <input type="file" id="productPhoto" accept="image/*" onchange="previewImage(this, 'imgPreviewProduct')">
+                <img id="imgPreviewProduct" class="preview-img" alt="Vista previa prenda">
+            </div>
+            <div class="upload-box">
+                <label for="voucherPhoto">🧾 Adjuntar Comprobante / Voucher (Opcional)</label>
+                <input type="file" id="voucherPhoto" accept="image/*" onchange="previewImage(this, 'imgPreviewVoucher')">
+                <img id="imgPreviewVoucher" class="preview-img" alt="Vista previa voucher">
+            </div>
+        </div>
+
+        <!-- Fila Horizontal 4: Notas -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="notes">Indicaciones / Notas de Confección (Opcional):</label>
+                <textarea id="notes" placeholder="Cualquier detalle libre: tipo de elástico, costuras, tallas específicas, empaque, etc."></textarea>
+            </div>
+        </div>
+
+        <!-- Sección de Cierre -->
+        <div class="total-section">
+            Total a Pagar: $<span id="totalPrice">0.00</span>
+        </div>
+        <button type="submit">Generar y Guardar Pedido</button>
+    </form>
+</div>
+
+<script>
+    // 1. Gestión del Correlativo Automático
+    function getNextOrderNumber() {
+        let currentCount = parseInt(localStorage.getItem('rgutz_order_counter')) || 1;
+        let formattedNumber = String(currentCount).padStart(5, '0');
+        return `N° 001-${formattedNumber}`;
+    }
+
+    function incrementOrderNumber() {
+        let currentCount = parseInt(localStorage.getItem('rgutz_order_counter')) || 1;
+        localStorage.setItem('rgutz_order_counter', currentCount + 1);
+    }
+
+    // 2. Formato e Inicialización de Fecha Actual
+    function setCurrentDate() {
+        const today = new Date();
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        document.getElementById('currentDate').textContent = today.toLocaleDateString('es-SV', options);
+    }
+
+    // 3. Previsualización de imágenes subidas
+    function previewImage(input, previewId) {
+        const preview = document.getElementById(previewId);
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            }
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = '';
+            preview.style.display = 'none';
+        }
+    }
+
+    // 4. Cálculo del Total a Pagar
+    function calculateTotal() {
+        const productSelect = document.getElementById('productSelect');
+        const quantityInput = document.getElementById('quantity');
+        const customPriceInput = document.getElementById('customPrice');
+        const customPriceBox = document.getElementById('customPriceBox');
+        
+        let unitPrice = 0;
+        const qty = parseInt(quantityInput.value) || 0;
+
+        if (productSelect.value === 'custom') {
+            customPriceBox.style.display = 'flex';
+            unitPrice = parseFloat(customPriceInput.value) || 0;
+        } else {
+            customPriceBox.style.display = 'none';
+            unitPrice = parseFloat(productSelect.value) || 0;
+        }
+
+        const total = unitPrice * qty;
+        document.getElementById('totalPrice').textContent = total.toFixed(2);
+    }
+
+    // 5. Inicialización de Eventos al cargar el DOM
+    document.addEventListener('DOMContentLoaded', () => {
+        // Establecer Fecha y Correlativo Actual
+        setCurrentDate();
+        document.getElementById('orderNumberDisplay').textContent = getNextOrderNumber();
+
+        // Escuchadores para recalcular total automáticamente
+        document.getElementById('productSelect').addEventListener('change', calculateTotal);
+        document.getElementById('quantity').addEventListener('input', calculateTotal);
+        document.getElementById('customPrice').addEventListener('input', calculateTotal);
+
+        // Envío del Formulario
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const currentOrderNo = getNextOrderNumber();
+            alert(`¡Pedido ${currentOrderNo} guardado exitosamente!`);
+
+            // Incrementar correlativo para el siguiente pedido
+            incrementOrderNumber();
+            document.getElementById('orderNumberDisplay').textContent = getNextOrderNumber();
+
+            // Limpiar formulario y restablecer valores predeterminados
+            this.reset();
+            document.getElementById('imgPreviewProduct').style.display = 'none';
+            document.getElementById('imgPreviewVoucher').style.display = 'none';
+            calculateTotal();
+        });
+    });
+</script>
+</body>
+</html>
